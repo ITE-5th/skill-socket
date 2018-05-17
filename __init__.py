@@ -3,7 +3,6 @@
 # import sys
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
-import jsonpickle
 from mycroft.util.log import LOG
 
 from .message.message import ImageMessage
@@ -49,10 +48,10 @@ class SocketSkill(MycroftSkill):
             LOG.info('Sending "Hello" Message')
             msg = ImageMessage("hello")
             LOG.info(msg)  #
-            msg = jsonpickle.encode(msg)
+            # msg = jsonpickle.encode(msg)
             LOG.info(type(msg))  #
             # msg['py/object'] = msg['py/object'].split(".")[-1]
-            ConnectionHelper.send_json(self.socket, msg)
+            ConnectionHelper.send_pickle(self.socket, msg)
             LOG.info('Json Sent')
             # self.socket.close()
 
