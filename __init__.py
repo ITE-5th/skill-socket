@@ -38,9 +38,9 @@ class SocketSkill(MycroftSkill):
         try:
             LOG.info('Sending "Hello" Message')
             msg = Message()
-            ConnectionHelper.send_json(json.dumps(msg.__dict__))
+            ConnectionHelper.send_json(self.socket, json.dumps(msg.__dict__))
             LOG.info('Json Sent')
-            self.socket.close()
+            # self.socket.close()
 
         except Exception as e:
             LOG.info('Something is wrong')
