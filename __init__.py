@@ -32,7 +32,7 @@ class SocketSkill(MycroftSkill):
 
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
-    @intent_handler(IntentBuilder("CaptionIntent").require('ImageCaption'))
+    @intent_handler(IntentBuilder("SocketIntent").require('Socket'))
     def handle_image_caption(self, message):
         # LOG.info('Handling ' + message)
         try:
