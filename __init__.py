@@ -30,7 +30,7 @@ class SocketSkill(MycroftSkill):
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
     def initialize(self):
-        LOG.info("Image Captioning Skill started")
+        LOG.info("Socket Skill started")
         # self.port = IMAGE_CAPTIONING_PORT
         # self.host = self.settings["server_url"]
 
@@ -43,7 +43,7 @@ class SocketSkill(MycroftSkill):
             LOG.info(str(self.socket))
             LOG.info('Sending "Hello" Message')
             msg = ImageMessage("hello")
-            LOG.info(msg) #
+            LOG.info(msg)  #
             ConnectionHelper.send_json(self.socket, jsonpickle.encode(msg))
             LOG.info('Json Sent')
             # self.socket.close()
@@ -58,7 +58,8 @@ class SocketSkill(MycroftSkill):
 
     def stop(self):
         super(SocketSkill, self).shutdown()
-        LOG.info("Image Captioning Skill CLOSED")
+        self.socket.close()
+        LOG.info("Socket Skill CLOSED")
 
 
 def create_skill():
