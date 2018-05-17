@@ -6,7 +6,8 @@ import pickle
 
 from mycroft.util.log import LOG
 
-from .message.message import ImageMessage
+# TODO: Make sure "." before module name is not missing
+from .message.vqa_message import VqaMessage
 
 LOG.warning('Running Skill Image Captioning 0')
 import socket
@@ -47,7 +48,7 @@ class SocketSkill(MycroftSkill):
         try:
             LOG.info(str(self.socket))
             LOG.info('Sending "Hello" Message')
-            msg = ImageMessage("hello")
+            msg = VqaMessage("hello", "What?")
             LOG.info(msg)  #
             # msg = jsonpickle.encode(msg)
             LOG.info(type(msg))  #
