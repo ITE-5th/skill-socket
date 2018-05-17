@@ -1,13 +1,12 @@
 # File Path Manager
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+# import os
+# import sys
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 import jsonpickle
 from mycroft.util.log import LOG
 
 from .message.message import ImageMessage
-
 
 LOG.warning('Running Skill Image Captioning 0')
 import socket
