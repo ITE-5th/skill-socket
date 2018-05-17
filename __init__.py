@@ -36,7 +36,7 @@ class SocketSkill(MycroftSkill):
     def handle_image_caption(self, message):
         # LOG.info('Handling ' + message)
         try:
-            Log.info(str(self.socket))
+            LOG.info(str(self.socket))
             LOG.info('Sending "Hello" Message')
             msg = Message()
             ConnectionHelper.send_json(self.socket, json.dumps(msg.__dict__))
