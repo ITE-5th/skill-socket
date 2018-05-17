@@ -1,4 +1,4 @@
-from server.message.message import Message
+from .message import Message
 
 
 class NameMessage(Message):
