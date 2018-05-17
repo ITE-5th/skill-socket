@@ -1,5 +1,7 @@
+import cv2
 # File Path Manager
 
+import jsonpickle
 from mycroft.util.log import LOG
 
 LOG.warning('Running Skill Image Captioning 0')
@@ -18,7 +20,7 @@ class SocketSkill(MycroftSkill):
         super(SocketSkill, self).__init__("ImageCaptionSkill")
         LOG.warning('Running Skill Image Captioning ')
 
-        # self.socket = None
+        self.socket = None
         self.port = SOCKET_PORT
         self.host = "192.168.1.103"
         self.connect()
@@ -41,8 +43,8 @@ class SocketSkill(MycroftSkill):
         try:
             LOG.info(str(self.socket))
             LOG.info('Sending "Hello" Message')
-            msg = Message()
-            ConnectionHelper.send_json(self.socket, json.dumps(msg.__dict__))
+            msg = ImageMessage(cv2.imread("test.jpeg"))
+            ConnectionHelper.send_json(self.socket, jsonpickle.encode(msg))
             LOG.info('Json Sent')
             # self.socket.close()
 
