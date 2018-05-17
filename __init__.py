@@ -21,6 +21,9 @@ class SocketSkill(MycroftSkill):
         # self.socket = None
         self.port = SOCKET_PORT
         self.host = "192.168.1.103"
+        self.connect()
+
+    def connect(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.host, self.port))
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
@@ -47,6 +50,7 @@ class SocketSkill(MycroftSkill):
             LOG.info('Something is wrong')
             LOG.info(str(e))
             self.speak("Exception")
+            self.connect()
             return False
         return True
 
