@@ -130,7 +130,7 @@ class ConnectionHelper:
 # Message Classes
 
 
-class Message:
+class Message(object):
     pass
 
 
