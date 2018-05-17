@@ -1,7 +1,8 @@
 # File Path Manager
-
 import jsonpickle
 from mycroft.util.log import LOG
+
+from message.message import ImageMessage
 
 LOG.warning('Running Skill Image Captioning 0')
 import socket
@@ -44,6 +45,7 @@ class SocketSkill(MycroftSkill):
             LOG.info('Sending "Hello" Message')
             msg = ImageMessage("hello")
             LOG.info(msg)  #
+            LOG.info(type(msg))  #
             ConnectionHelper.send_json(self.socket, jsonpickle.encode(msg))
             LOG.info('Json Sent')
             # self.socket.close()
@@ -146,9 +148,10 @@ class CloseMessage(Message):
     pass
 
 
-class ImageMessage(Message):
-    def __init__(self, image):
-        self.image = image
+#
+# class ImageMessage(Message):
+#     def __init__(self, image):
+#         self.image = image
 
 
 class ImageToTextMessage(ImageMessage):
