@@ -1,7 +1,7 @@
-from .image_message import ImageMessage
+from .message.message import Message
 
 
-class VqaMessage(ImageMessage):
+class VqaMessage(Message):
     def __init__(self, image, question):
         super().__init__(image)
         self.question = question
