@@ -7,6 +7,7 @@ import pickle
 from mycroft.util.log import LOG
 
 # TODO: Make sure "." before module name is not missing
+from .message.close_message import CloseMessage
 from .message.vqa_message import VqaMessage
 
 LOG.warning('Running Skill Image Captioning 0')
@@ -42,7 +43,7 @@ class SocketSkill(MycroftSkill):
 
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
-    @intent_handler(IntentBuilder("SocketIntent").require('Socket'))
+    @intent_handler(IntentBuilder("SocketIntent").require('VQA'))
     def handle_image_caption(self, message):
         # LOG.info('Handling ' + message)
         try:
@@ -50,12 +51,29 @@ class SocketSkill(MycroftSkill):
             LOG.info('Sending "Hello" Message')
             msg = VqaMessage("hello", "What?")
             LOG.info(msg)  #
-            # msg = jsonpickle.encode(msg)
             LOG.info(type(msg))  #
-            # msg['py/object'] = msg['py/object'].split(".")[-1]
             ConnectionHelper.send_pickle(self.socket, msg)
             LOG.info('Json Sent')
-            # self.socket.close()
+
+        except Exception as e:
+            LOG.info('Something is wrong')
+            LOG.info(str(e))
+            self.speak("Exception")
+            self.connect()
+            return False
+        return True
+
+    @intent_handler(IntentBuilder("SocketIntent").require('Close'))
+    def handle_image_caption(self, message):
+        # LOG.info('Handling ' + message)
+        try:
+            LOG.info(str(self.socket))
+            LOG.info('Sending "Hello" Message')
+            msg = CloseMessage()
+            LOG.info(msg)
+            LOG.info(type(msg))  #
+            ConnectionHelper.send_pickle(self.socket, msg)
+            LOG.info('Json Sent')
 
         except Exception as e:
             LOG.info('Something is wrong')
