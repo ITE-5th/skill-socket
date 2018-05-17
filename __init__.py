@@ -44,6 +44,7 @@ class SocketSkill(MycroftSkill):
             LOG.info(str(self.socket))
             LOG.info('Sending "Hello" Message')
             msg = ImageMessage(cv2.imread("test.jpeg"))
+            LOG.info(msg)
             ConnectionHelper.send_json(self.socket, jsonpickle.encode(msg))
             LOG.info('Json Sent')
             # self.socket.close()
