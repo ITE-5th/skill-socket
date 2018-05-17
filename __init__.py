@@ -37,7 +37,8 @@ class SocketSkill(MycroftSkill):
         # LOG.info('Handling ' + message)
         try:
             LOG.info('Sending "Hello" Message')
-            ConnectionHelper.send_json("Hello")
+            msg = Message()
+            ConnectionHelper.send_json(json.dump(msg))
             LOG.info('Json Sent')
             self.socket.close()
 
