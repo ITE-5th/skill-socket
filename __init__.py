@@ -1,4 +1,3 @@
-import cv2
 # File Path Manager
 
 import jsonpickle
