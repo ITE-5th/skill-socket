@@ -1,4 +1,4 @@
-from .message.message import Message
+from .message import Message
 
 
 class VqaMessage(Message):
