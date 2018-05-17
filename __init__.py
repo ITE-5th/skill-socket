@@ -49,9 +49,9 @@ class SocketSkill(MycroftSkill):
             LOG.info('Sending "Hello" Message')
             msg = ImageMessage("hello")
             LOG.info(msg)  #
-            LOG.info(type(msg))  #
             msg = jsonpickle.encode(msg)
-            msg['py/object'] = msg['py/object'].split(".")[-1]
+            LOG.info(type(msg))  #
+            # msg['py/object'] = msg['py/object'].split(".")[-1]
             ConnectionHelper.send_json(self.socket, msg)
             LOG.info('Json Sent')
             # self.socket.close()
