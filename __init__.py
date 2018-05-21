@@ -47,7 +47,7 @@ class SocketSkill(MycroftSkill):
     def caption(self, message):
         # LOG.info('Handling ' + message)
         try:
-            image = Image.open("test.jpeg")
+            image = Image.open("./code/test.jpeg")
             LOG.info(type(image))
             msg = ImageToTextMessage(image)
             ConnectionHelper.send_pickle(self.socket, msg)
