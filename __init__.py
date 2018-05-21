@@ -4,7 +4,7 @@
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 import os
 
-from PIL import Image
+import cv2
 from mycroft.util.log import LOG
 
 from .code.message.close_message import CloseMessage
@@ -53,7 +53,7 @@ class SocketSkill(MycroftSkill):
             rel_path = "test.jpeg"
             abs_file_path = os.path.join(script_dir, rel_path)
 
-            image = Image.open(abs_file_path)
+            image = cv2.imread(abs_file_path)
             LOG.info(type(image))
             msg = ImageToTextMessage(image)
             ConnectionHelper.send_pickle(self.socket, msg)
