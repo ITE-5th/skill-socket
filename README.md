@@ -1,12 +1,12 @@
-## Image Caption
-image captioning Skill
+## Socket
+Socket
 
 ## Description
-Describes image from connected camera using remote server
+open socket with server
 
 ## Examples
  * "caption"
 
 ## Credits
-FITE-PRO
+ITE-5th
 
