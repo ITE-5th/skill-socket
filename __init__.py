@@ -2,12 +2,14 @@
 # import os
 # import sys
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+import os
+
 from PIL import Image
 from mycroft.util.log import LOG
 
+from .code.message.close_message import CloseMessage
 # TODO: Make sure "." before module name is not missing
 from .code.message.image_to_text_message import ImageToTextMessage
-from .code.message.close_message import CloseMessage
 from .code.message.vqa_message import VqaMessage
 from .code.misc.connection_helper import ConnectionHelper
 
@@ -47,7 +49,11 @@ class SocketSkill(MycroftSkill):
     def caption(self, message):
         # LOG.info('Handling ' + message)
         try:
-            image = Image.open("./code/test.jpeg")
+            script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+            rel_path = "test.jpeg"
+            abs_file_path = os.path.join(script_dir, rel_path)
+
+            image = Image.open(abs_file_path)
             LOG.info(type(image))
             msg = ImageToTextMessage(image)
             ConnectionHelper.send_pickle(self.socket, msg)
