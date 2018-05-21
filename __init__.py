@@ -45,15 +45,25 @@ class SocketSkill(MycroftSkill):
 
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
+    @staticmethod
+    def take_image():
+        camera = cv2.VideoCapture(0)
+        return_value, image = camera.read()
+        del camera
+        return image
+
+    @staticmethod
+    def load_image(relative_path):
+        script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+        abs_file_path = os.path.join(script_dir, relative_path)
+        image = cv2.imread(abs_file_path)
+        return image
+
     @intent_file_handler('caption.intent')
     def caption(self, message):
         # LOG.info('Handling ' + message)
         try:
-            script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
-            rel_path = "test.jpeg"
-            abs_file_path = os.path.join(script_dir, rel_path)
-
-            image = cv2.imread(abs_file_path)
+            image = self.take_image()
             LOG.info(type(image))
             msg = ImageToTextMessage(image)
             ConnectionHelper.send_pickle(self.socket, msg)
