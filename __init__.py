@@ -6,7 +6,7 @@ from PIL import Image
 from mycroft.util.log import LOG
 
 # TODO: Make sure "." before module name is not missing
-from code.message.image_to_text_message import ImageToTextMessage
+from .code.message.image_to_text_message import ImageToTextMessage
 from .code.message.close_message import CloseMessage
 from .code.message.vqa_message import VqaMessage
 from .code.misc.connection_helper import ConnectionHelper
