@@ -74,6 +74,8 @@ class SocketSkill(MycroftSkill):
         try:
             msg = VqaMessage("hello", "What?")
             ConnectionHelper.send_pickle(self.socket, msg)
+            result = ConnectionHelper.receive_json(self.socket)
+            LOG.info(result)
         except Exception as e:
             LOG.info('Something is wrong')
             LOG.info(str(e))
