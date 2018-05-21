@@ -57,7 +57,7 @@ class SocketSkill(MycroftSkill):
             LOG.info(type(image))
             msg = ImageToTextMessage(image)
             ConnectionHelper.send_pickle(self.socket, msg)
-            result = ConnectionHelper.receive_pickle(self.socket)
+            result = ConnectionHelper.receive_json(self.socket)
             LOG.info(result)
 
         except Exception as e:
