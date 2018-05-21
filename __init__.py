@@ -45,7 +45,7 @@ class SocketSkill(MycroftSkill):
 
     @intent_file_handler('caption.intent')
     def caption(self, message):
-        LOG.info('Handling ' + message)
+        # LOG.info('Handling ' + message)
         try:
             image = Image.open("./test.jpeg")
             LOG.info(type(image))
@@ -64,7 +64,7 @@ class SocketSkill(MycroftSkill):
 
     @intent_file_handler('vqa.intent')
     def vqa(self, message):
-        LOG.info('Handling ' + message)
+        # LOG.info('Handling ' + message)
         try:
             msg = VqaMessage("hello", "What?")
             ConnectionHelper.send_pickle(self.socket, msg)

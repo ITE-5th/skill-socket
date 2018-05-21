@@ -1,5 +1,6 @@
 # Connection Helper
 import json
+import pickle
 
 
 class ConnectionHelper:
