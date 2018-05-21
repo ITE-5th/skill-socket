@@ -43,7 +43,7 @@ class SocketSkill(MycroftSkill):
 
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
-    @intent_file_handler('caption')
+    @intent_file_handler('caption.intent')
     def caption(self, message):
         LOG.info('Handling ' + message)
         try:
@@ -62,7 +62,7 @@ class SocketSkill(MycroftSkill):
             return False
         return True
 
-    @intent_file_handler('vqa')
+    @intent_file_handler('vqa.intent')
     def vqa(self, message):
         LOG.info('Handling ' + message)
         try:
@@ -76,7 +76,7 @@ class SocketSkill(MycroftSkill):
             return False
         return True
 
-    @intent_file_handler('close')
+    @intent_file_handler('close.intent')
     def close(self, message):
         # LOG.info('Handling ' + message)
         try:
