@@ -2,19 +2,19 @@
 # import os
 # import sys
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-import pickle
-
+from PIL import Image
 from mycroft.util.log import LOG
 
 # TODO: Make sure "." before module name is not missing
-from .message.close_message import CloseMessage
-from .message.vqa_message import VqaMessage
+from code.message.image_to_text_message import ImageToTextMessage
+from .code.message.close_message import CloseMessage
+from .code.message.vqa_message import VqaMessage
+from .code.misc.connection_helper import ConnectionHelper
 
 LOG.warning('Running Skill Image Captioning 0')
 import socket
 
-from adapt.intent import IntentBuilder
-from mycroft import MycroftSkill, intent_handler
+from mycroft import MycroftSkill, intent_file_handler
 
 SOCKET_PORT = 8888
 
@@ -43,17 +43,16 @@ class SocketSkill(MycroftSkill):
 
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
-    @intent_handler(IntentBuilder("SocketIntent").require('VQA'))
-    def handle_image_caption(self, message):
-        # LOG.info('Handling ' + message)
+    @intent_file_handler('caption')
+    def caption(self, message):
+        LOG.info('Handling ' + message)
         try:
-            LOG.info(str(self.socket))
-            LOG.info('Sending "Hello" Message')
-            msg = VqaMessage("hello", "What?")
-            LOG.info(msg)  #
-            LOG.info(type(msg))  #
+            image = Image.open("./test.jpeg")
+            LOG.info(type(image))
+            msg = ImageToTextMessage(image)
             ConnectionHelper.send_pickle(self.socket, msg)
-            LOG.info('Json Sent')
+            result = ConnectionHelper.receive_pickle(self.socket)
+            LOG.info(result)
 
         except Exception as e:
             LOG.info('Something is wrong')
@@ -63,18 +62,26 @@ class SocketSkill(MycroftSkill):
             return False
         return True
 
-    @intent_handler(IntentBuilder("SocketIntent").require('Close'))
-    def handle_image_caption(self, message):
+    @intent_file_handler('vqa')
+    def vqa(self, message):
+        LOG.info('Handling ' + message)
+        try:
+            msg = VqaMessage("hello", "What?")
+            ConnectionHelper.send_pickle(self.socket, msg)
+        except Exception as e:
+            LOG.info('Something is wrong')
+            LOG.info(str(e))
+            self.speak("Exception")
+            self.connect()
+            return False
+        return True
+
+    @intent_file_handler('close')
+    def close(self, message):
         # LOG.info('Handling ' + message)
         try:
-            LOG.info(str(self.socket))
-            LOG.info('Sending "Hello" Message')
             msg = CloseMessage()
-            LOG.info(msg)
-            LOG.info(type(msg))  #
             ConnectionHelper.send_pickle(self.socket, msg)
-            LOG.info('Json Sent')
-
         except Exception as e:
             LOG.info('Something is wrong')
             LOG.info(str(e))
@@ -91,72 +98,3 @@ class SocketSkill(MycroftSkill):
 
 def create_skill():
     return SocketSkill()
-
-
-# Connection Helper
-import json
-
-LOG.warning('Running Skill Image Captioning 2')
-
-
-class ConnectionHelper:
-
-    @staticmethod
-    def send_json(socket, data):
-        try:
-            serialized = json.dumps(data)
-        except (TypeError, ValueError) as e:
-            raise Exception('You can only send JSON-serializable data')
-        # send the length of the serialized data first
-        socket.send('%d\n'.encode() % len(serialized))
-        # send the serialized data
-        socket.sendall(serialized.encode())
-
-    @staticmethod
-    def receive_json(socket):
-        view = ConnectionHelper.receive(socket).decode()
-        try:
-            deserialized = json.loads(view)
-        except (TypeError, ValueError) as e:
-            raise Exception('Data received was not in JSON format')
-        return deserialized
-
-    @staticmethod
-    def send_pickle(socket, object):
-        try:
-            serialized = pickle.dumps(object)
-        except (TypeError, ValueError) as e:
-            raise Exception('You can only send JSON-serializable data')
-        # send the length of the serialized data first
-        socket.send('%d\n'.encode() % len(serialized))
-        # send the serialized data
-        socket.sendall(serialized)
-
-    @staticmethod
-    def receive_pickle(socket):
-        view = ConnectionHelper.receive(socket)
-        try:
-            deserialized = pickle.loads(view)
-        except (TypeError, ValueError) as e:
-            raise Exception('Data received was not in JSON format')
-        return deserialized
-
-    @staticmethod
-    def receive(socket):
-        # read the length of the data, letter by letter until we reach EOL
-        length_str = ''
-        char = socket.recv(1).decode()
-        if char == '':
-            return char
-        while char != '\n':
-            length_str += char
-            char = socket.recv(1).decode()
-        total = int(length_str)
-        # use a memoryview to receive the data chunk by chunk efficiently
-        view = memoryview(bytearray(total))
-        next_offset = 0
-        while total - next_offset > 0:
-            recv_size = socket.recv_into(view[next_offset:], total - next_offset)
-            next_offset += recv_size
-        view = view.tobytes()
-        return view
