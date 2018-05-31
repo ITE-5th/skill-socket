@@ -62,8 +62,8 @@ class SocketSkill(MycroftSkill):
             LOG.info(type(image))
             msg = ImageToTextMessage(image.tolist())
             ConnectionHelper.send_json(self.socket, msg)
-            result = ConnectionHelper.receive_json(self.socket)
-            LOG.info(result)
+            # result = ConnectionHelper.receive_json(self.socket)
+            # LOG.info(result)
 
         except Exception as e:
             LOG.info('Something is wrong')
