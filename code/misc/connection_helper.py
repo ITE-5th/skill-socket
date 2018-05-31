@@ -7,10 +7,10 @@ class ConnectionHelper:
 
     @staticmethod
     def send_json(socket, data):
-        try:
-            serialized = json.dumps(data.__dict__)
-        except (TypeError, ValueError) as e:
-            raise Exception('You can only send JSON-serializable data')
+        # try:
+        serialized = json.dumps(data.__dict__)
+        # except (TypeError, ValueError) as e:
+        #     raise Exception('You can only send JSON-serializable data')
         # send the length of the serialized data first
         socket.send('%d\n'.encode() % len(serialized))
         # send the serialized data
