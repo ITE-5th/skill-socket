@@ -72,22 +72,22 @@ class SocketSkill(MycroftSkill):
             self.connect()
             return False
         return True
-
-    @intent_file_handler('vqa.intent')
-    def vqa(self, message):
-        # LOG.info('Handling ' + message)
-        try:
-            msg = VqaMessage("hello", "What?")
-            ConnectionHelper.send_pickle(self.socket, msg)
-            result = ConnectionHelper.receive_json(self.socket)
-            LOG.info(result)
-        except Exception as e:
-            LOG.info('Something is wrong')
-            LOG.info(str(e))
-            self.speak("Exception")
-            self.connect()
-            return False
-        return True
+    #
+    # @intent_file_handler('vqa.intent')
+    # def vqa(self, message):
+    #     # LOG.info('Handling ' + message)
+    #     try:
+    #         msg = VqaMessage("hello", "What?")
+    #         ConnectionHelper.send_pickle(self.socket, msg)
+    #         result = ConnectionHelper.receive_json(self.socket)
+    #         LOG.info(result)
+    #     except Exception as e:
+    #         LOG.info('Something is wrong')
+    #         LOG.info(str(e))
+    #         self.speak("Exception")
+    #         self.connect()
+    #         return False
+    #     return True
 
     @intent_file_handler('close.intent')
     def close(self, message):
