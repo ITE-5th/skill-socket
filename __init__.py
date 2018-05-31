@@ -12,7 +12,6 @@ from mycroft.util.log import LOG
 from .code.message.close_message import CloseMessage
 # TODO: Make sure "." before module name is not missing
 from .code.message.image_to_text_message import ImageToTextMessage
-from .code.message.vqa_message import VqaMessage
 from .code.misc.connection_helper import ConnectionHelper
 
 SOCKET_PORT = 8888
@@ -59,8 +58,8 @@ class SocketSkill(MycroftSkill):
         # LOG.info('Handling ' + message)
         try:
             image = self.take_image()
-            LOG.info(type(image))
             msg = ImageToTextMessage(image.tolist())
+            LOG.info(msg._type)
             ConnectionHelper.send_json(self.socket, msg)
             # result = ConnectionHelper.receive_json(self.socket)
             # LOG.info(result)
@@ -72,6 +71,7 @@ class SocketSkill(MycroftSkill):
             self.connect()
             return False
         return True
+
     #
     # @intent_file_handler('vqa.intent')
     # def vqa(self, message):
