@@ -6,5 +6,4 @@ class ImageMessage(Message):
         super().__init__()
         self.image = image
         # self.tttt = self.__class__.__name__.encode()
-        self.tttt = 1234
-
+        self.__dict__['type'] = self.__class__.__name__.encode()
