@@ -62,6 +62,7 @@ class SocketSkill(MycroftSkill):
             ConnectionHelper.send_json(self.socket, msg)
             result = ConnectionHelper.receive_json(self.socket)
             LOG.info(result)
+            self.speak(result)
 
         except Exception as e:
             LOG.info('Something is wrong')
