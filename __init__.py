@@ -3,8 +3,10 @@
 # import sys
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 import os
+import socket
 
 import cv2
+from mycroft import MycroftSkill, intent_file_handler
 from mycroft.util.log import LOG
 
 from .code.message.close_message import CloseMessage
@@ -13,21 +15,14 @@ from .code.message.image_to_text_message import ImageToTextMessage
 from .code.message.vqa_message import VqaMessage
 from .code.misc.connection_helper import ConnectionHelper
 
-LOG.warning('Running Skill Image Captioning 0')
-import socket
-
-from mycroft import MycroftSkill, intent_file_handler
-
 SOCKET_PORT = 8888
 
-LOG.warning('Running Skill Image Captioning 1')
+LOG.warning('Running Skill Image Captioning 0')
 
 
 class SocketSkill(MycroftSkill):
     def __init__(self):
-        super(SocketSkill, self).__init__("ImageCaptionSkill")
-        LOG.warning('Running Skill Image Captioning ')
-
+        super(SocketSkill, self).__init__("Socket Skill")
         self.socket = None
         self.port = SOCKET_PORT
         self.host = "192.168.1.103"
@@ -65,7 +60,7 @@ class SocketSkill(MycroftSkill):
         try:
             image = self.take_image()
             LOG.info(type(image))
-            msg = ImageToTextMessage(image)
+            msg = ImageToTextMessage("123")
             ConnectionHelper.send_json(self.socket, msg)
             result = ConnectionHelper.receive_json(self.socket)
             LOG.info(result)
