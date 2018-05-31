@@ -59,10 +59,9 @@ class SocketSkill(MycroftSkill):
         try:
             image = self.take_image()
             msg = ImageToTextMessage(image.tolist())
-            LOG.info(msg.__dict__.keys())
             ConnectionHelper.send_json(self.socket, msg)
-            # result = ConnectionHelper.receive_json(self.socket)
-            # LOG.info(result)
+            result = ConnectionHelper.receive_json(self.socket)
+            LOG.info(result)
 
         except Exception as e:
             LOG.info('Something is wrong')
