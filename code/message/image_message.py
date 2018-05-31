@@ -5,3 +5,5 @@ class ImageMessage(Message):
     def __init__(self, image):
         super().__init__()
         self.image = image
+        self._type = self.__class__.__name__.encode()
+
