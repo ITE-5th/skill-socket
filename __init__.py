@@ -59,7 +59,7 @@ class SocketSkill(MycroftSkill):
         try:
             image = self.take_image()
             msg = ImageToTextMessage(image.tolist())
-            LOG.info(msg._type)
+            LOG.info(type(msg.image))
             ConnectionHelper.send_json(self.socket, msg)
             # result = ConnectionHelper.receive_json(self.socket)
             # LOG.info(result)
