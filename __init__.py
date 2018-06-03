@@ -24,7 +24,7 @@ class SocketSkill(MycroftSkill):
         super(SocketSkill, self).__init__("Socket Skill")
         self.socket = None
         self.port = SOCKET_PORT
-        self.host = "192.168.1.103"
+        self.host = "192.168.1.7"
         self.connect()
 
     def connect(self):
@@ -33,11 +33,9 @@ class SocketSkill(MycroftSkill):
         LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
     def initialize(self):
-        LOG.info("Socket Skill started")
+        LOG.info("Socket Skill started " + self.host + ":" + str(self.port))
         # self.port = IMAGE_CAPTIONING_PORT
         # self.host = self.settings["server_url"]
-
-        LOG.info('connected to server:' + self.host + ' : ' + str(self.port))
 
     @staticmethod
     def take_image():
@@ -71,23 +69,6 @@ class SocketSkill(MycroftSkill):
             self.connect()
             return False
         return True
-
-    #
-    # @intent_file_handler('vqa.intent')
-    # def vqa(self, message):
-    #     # LOG.info('Handling ' + message)
-    #     try:
-    #         msg = VqaMessage("hello", "What?")
-    #         ConnectionHelper.send_pickle(self.socket, msg)
-    #         result = ConnectionHelper.receive_json(self.socket)
-    #         LOG.info(result)
-    #     except Exception as e:
-    #         LOG.info('Something is wrong')
-    #         LOG.info(str(e))
-    #         self.speak("Exception")
-    #         self.connect()
-    #         return False
-    #     return True
 
     @intent_file_handler('close.intent')
     def close(self, message):
